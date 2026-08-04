@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="众包式AI内容核查互动式仿真平台实验">
+  <meta name="robots" content="noindex,nofollow">
+  <title>微博内容发布实验</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-default-study="4" data-version="2026-08-04-study4-source-strength">
+  <header class="topbar">
+    <button class="header-search-icon" type="button" aria-label="搜索">⌕</button>
+    <a class="brand weibo-brand" href="#" aria-label="微博首页">
+      <span class="weibo-wordmark">weibo</span><span class="weibo-cn">微博</span>
+    </a>
+    <nav class="top-actions weibo-top-actions" aria-label="主导航">
+      <button class="active" type="button" aria-label="首页">⌂</button>
+      <button type="button" aria-label="热门">◉</button>
+      <button type="button" aria-label="视频">▣</button>
+      <button class="message-button" type="button" aria-label="消息">✉<small>2</small></button>
+      <span class="weibo-avatar" aria-label="用户头像">创</span>
+    </nav>
+    <nav class="top-utility" aria-label="辅助功能">
+      <button type="button" aria-label="游戏">♣</button>
+      <button type="button" aria-label="设置">⚙</button>
+      <button type="button" aria-label="深色模式">◐</button>
+      <button class="compose-shortcut" type="button" aria-label="发布">□</button>
+      <button class="accessibility-button" type="button">无障碍</button>
+    </nav>
+  </header>
+
+  <div class="shell">
+    <aside class="left-rail weibo-left-rail" aria-label="微博导航">
+      <strong>首页</strong>
+      <a class="active" href="#"><span>☷</span>全部关注</a>
+      <a href="#"><span>✪</span>最新微博</a>
+      <a href="#"><span>♙</span>特别关注</a>
+      <a href="#"><span>♙</span>好友圈</a>
+      <div class="rail-divider"></div>
+      <div class="rail-group-heading"><span>自定义分组</span><button type="button">管理</button></div>
+      <a class="sub-link" href="#">•　名人明星</a>
+      <a class="sub-link" href="#">•　同事</a>
+      <a class="sub-link" href="#">•　同学</a>
+      <a class="sub-link" href="#">•　悄悄关注</a>
+      <div class="rail-note">研究模拟页面 · 内容均为虚构</div>
+    </aside>
+
+    <main class="main-column">
+      <section id="intro-screen" class="panel screen active" aria-labelledby="intro-title">
+        <div class="step-kicker">内容创作实验</div>
+        <h1 id="intro-title">请完成一次社交媒体内容发布</h1>
+        <p>你将使用网站内置的实验AI助手生成一段文案，可以自由修改，然后像平时一样完成发布设置。</p>
+        <div class="notice-box">
+          <strong>隐私提示</strong>
+          <p>请勿在提示词或文案中输入本人或他人的姓名、联系方式、住址、账号等个人信息。</p>
+        </div>
+        <label class="consent-row">
+          <input id="consent" type="checkbox">
+          <span>我已阅读说明，并确认自己年满18岁且过去三个月有社交媒体内容发布经验。</span>
+        </label>
+        <button id="start-btn" class="primary-btn" type="button" disabled>开始创作</button>
+      </section>
+
+      <section id="create-screen" class="screen" aria-labelledby="create-title">
+        <div class="progress" aria-label="实验进度"><span style="width:25%"></span></div>
+        <div class="panel">
+          <div class="step-kicker">步骤 1 / 2 · AI创作</div>
+          <h1 id="create-title">使用AI助手生成文案</h1>
+          <p id="topic-instruction" class="topic-instruction"></p>
+          <label class="field-label" for="prompt-input">给AI助手的提示词</label>
+          <textarea id="prompt-input" rows="4" maxlength="500" placeholder="例如：写一段轻松、实用的分享，包含三个具体建议。"></textarea>
+          <div class="field-meta"><span>请勿输入个人信息</span><span id="prompt-count">0 / 500</span></div>
+          <button id="generate-btn" class="ai-btn" type="button">
+            <span aria-hidden="true">✦</span> 生成文案
+          </button>
+          <div id="ai-working" class="ai-working" hidden aria-live="polite">
+            <span></span><span></span><span></span> AI助手正在整理文案
+          </div>
+        </div>
+
+        <div id="draft-panel" class="panel" hidden>
+          <div class="panel-heading">
+            <div>
+              <div class="step-kicker">AI生成结果</div>
+              <h2>修改并确认文案</h2>
+            </div>
+            <span class="ai-badge">AI生成</span>
+          </div>
+          <label class="field-label" for="draft-input">最终发布文案</label>
+          <textarea id="draft-input" rows="9" maxlength="1500"></textarea>
+          <div class="field-meta"><span>你可以自由增删和改写</span><span id="draft-count">0 / 1500</span></div>
+          <button id="to-publish-btn" class="primary-btn" type="button">进入发布页面</button>
+        </div>
+      </section>
+      <section id="publish-screen" class="screen" aria-labelledby="publish-title">
+        <div class="progress" aria-label="实验进度"><span style="width:45%"></span></div>
+        <div class="panel publish-panel">
+          <div class="step-kicker">步骤 2 / 2 · 发布设置</div>
+          <h1 id="publish-title">发布动态</h1>
+          <div class="composer publish-composer">
+            <div class="avatar" aria-hidden="true">创</div>
+            <div class="publish-compose-area">
+              <textarea id="publish-text" rows="8" maxlength="1500" aria-label="待发布文案"></textarea>
+              <div class="declaration-select">
+                <button id="declaration-toggle" class="declaration-toggle" type="button"
+                  aria-haspopup="true" aria-expanded="false" aria-controls="declaration-menu">
+                  <span id="declaration-toggle-label">内容声明</span><span aria-hidden="true">⌄</span>
+                </button>
+                <div id="declaration-menu" class="declaration-menu" aria-label="内容声明选项" hidden>
+                  <div class="declaration-menu-heading"><strong>内容声明</strong><span aria-hidden="true">?</span></div>
+                  <div class="declaration-options-grid">
+                    <label class="declaration-menu-option">
+                      <input id="content-declaration-none" type="radio" name="content-declaration" value="none" checked>
+                      <span>无</span>
+                    </label>
+                    <label class="declaration-menu-option">
+                      <input type="radio" name="content-declaration" value="original">
+                      <span>内容为自主创作</span>
+                    </label>
+                    <label class="declaration-menu-option">
+                      <input type="radio" name="content-declaration" value="repost">
+                      <span>内容为转载</span>
+                    </label>
+                    <label class="declaration-menu-option">
+                      <input id="initial-disclosure" type="radio" name="content-declaration" value="ai" autocomplete="off">
+                      <span>内容由AI生成</span>
+                    </label>
+                    <label class="declaration-menu-option">
+                      <input type="radio" name="content-declaration" value="fictional">
+                      <span>内容为虚构演绎</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="publish-toolbar">
+            <div class="publish-tools" aria-hidden="true">
+              <span>☺<small>表情</small></span>
+              <span>▧<small>图片</small></span>
+              <span>▣<small>视频</small></span>
+              <span>#<small>话题</small></span>
+              <span>•••<small>更多</small></span>
+            </div>
+            <div class="publish-actions">
+              <div class="visibility-select">
+                <button id="visibility-toggle" class="visibility-toggle" type="button"
+                  aria-haspopup="true" aria-expanded="false" aria-controls="visibility-menu">
+                  <span aria-hidden="true">◷</span><span id="visibility-toggle-label">公开</span><span aria-hidden="true">⌄</span>
+                </button>
+                <div id="visibility-menu" class="visibility-menu" aria-label="可见范围选项" hidden>
+                  <label class="visibility-option"><input id="visibility-public" type="radio" name="post-visibility" value="public" checked><span>公开</span></label>
+                  <label class="visibility-option"><input type="radio" name="post-visibility" value="followers"><span>粉丝</span></label>
+                  <label class="visibility-option"><input type="radio" name="post-visibility" value="friends"><span>好友圈</span></label>
+                  <label class="visibility-option"><input type="radio" name="post-visibility" value="private"><span>仅自己可见</span></label>
+                  <label class="visibility-option"><input type="radio" name="post-visibility" value="group"><span>群可见</span></label>
+                </div>
+              </div>
+              <button id="publish-btn" class="primary-btn" type="button">发布</button>
+            </div>
+          </div>
+        </div>
+        <div class="weibo-feed-preview" aria-hidden="true">
+          <div class="feed-tabs">
+            <span class="active">全部</span><span>原创</span><span>视频</span><span>超话社区</span><span>V+微博</span><span>群微博</span>
+          </div>
+          <div class="feed-filter"><span>你可能感兴趣的内容</span><span>⌄</span></div>
+          <article class="feed-post">
+            <div class="feed-avatar">生</div>
+            <div>
+              <strong>城市生活研究所</strong>
+              <small>今天 09:18 · 来自网页端</small>
+              <p>慢下来看看熟悉城市里的新风景，也许会发现不同的周末节奏。</p>
+              <div class="feed-photo-placeholder"></div>
+              <div class="feed-actions"><span>转发 174</span><span>评论 147</span><span>赞 1878</span></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="post-screen" class="screen" aria-labelledby="post-title">
+        <div class="progress" aria-label="实验进度"><span style="width:65%"></span></div>
+        <div class="panel post-panel">
+          <div class="post-author">
+            <div class="avatar" aria-hidden="true">创</div>
+            <div>
+              <strong>社区创作者</strong>
+              <div class="muted">刚刚 · 来自网页端</div>
+            </div>
+            <div class="post-menu-wrap">
+              <button id="post-more-button" type="button" class="icon-btn" aria-label="更多操作"
+                aria-haspopup="true" aria-expanded="false" aria-controls="post-action-menu">•••</button>
+              <div id="post-action-menu" class="post-action-menu" role="menu" hidden>
+                <button id="edit-post-button" type="button" role="menuitem">
+                  <span aria-hidden="true">✎</span>
+                  编辑动态
+                </button>
+              </div>
+            </div>
+          </div>
+          <p id="published-content" class="post-content"></p>
+          <div id="ai-label" class="content-label" hidden>内容使用AI生成</div>
+
+          <aside id="community-note" class="community-note" hidden aria-label="公开社区附注">
+            <div class="note-heading">
+              <span class="note-icon" aria-hidden="true">✓</span>
+              <strong id="note-heading-text">社区附注 · 公开</strong>
+            </div>
+            <p id="note-primary-text">社区贡献者认为：该帖的文案在创作过程中使用了生成式AI，但发布者尚未添加AI内容声明。</p>
+            <p id="note-secondary-text">来自不同观点群体的贡献者已将这条附注评为“有帮助”。</p>
+            <div id="note-metadata" class="note-metadata" hidden></div>
+          </aside>
+
+          <div class="post-stats"><span>转发 12</span><span>评论 28</span><span>赞 106</span></div>
+        </div>
+
+        <div id="initial-discloser-exit" class="panel exit-panel" hidden>
+          <div class="success-icon" aria-hidden="true">✓</div>
+          <h2>发布完成</h2>
+          <p>你在首次发布时主动添加了AI内容声明。本次体验到此结束，感谢参与。</p>
+          <button id="initial-finish-btn" class="primary-btn" type="button">完成</button>
+        </div>
+
+        <div id="continue-panel" class="panel" hidden>
+          <h2 id="post-title">请查看刚刚发布的动态</h2>
+          <p>请确认页面中的动态及相关信息。后续问题将在见数平台中呈现。</p>
+          <button id="finish-experiment-btn" class="primary-btn" type="button">完成体验并返回</button>
+        </div>
+      </section>
+
+      <section id="complete-screen" class="panel screen" aria-labelledby="complete-title">
+        <div class="success-icon" aria-hidden="true">✓</div>
+        <h1 id="complete-title">本阶段体验已完成</h1>
+        <p>网站内不再呈现问卷题项，请返回见数平台继续完成后续测量。</p>
+        <p id="completion-code" class="completion-code"></p>
+        <button id="return-btn" class="primary-btn" type="button" hidden>返回问卷</button>
+      </section>
+    </main>
+
+    <aside class="right-rail weibo-right-rail">
+      <section class="trend-card weibo-hot-card">
+        <div class="hot-card-heading"><h2>微博热搜</h2><span>↻ 点击刷新</span></div>
+        <div class="hot-tabs"><span class="active">我的</span><span>热搜</span></div>
+        <ol>
+          <li><b>1</b><span>千万不要把手机交给...</span><small>978503　<i>热</i></small></li>
+          <li><b>2</b><span>曝黄政民出轨</span><small>10:27 登顶</small></li>
+          <li><b>3</b><span>结婚14年丈夫出轨</span><small>239729　<i>新</i></small></li>
+          <li><b>4</b><span>莫氏鸳鸯首轮遭淘汰</span><small>628855　<i>新</i></small></li>
+          <li><b>5</b><span>去医院医生的暗示你...</span><small>955619　<i>新</i></small></li>
+          <li><b>6</b><span>年轻创作者的生活</span><small>60901</small></li>
+          <li><b>7</b><span>粉笔网炒股巨额亏损</span><small>500055　<i>新</i></small></li>
+          <li><b>8</b><span>女子刚怀孕一个多月</span><small>248180</small></li>
+          <li><b>9</b><span>城市徒步路线</span><small>15:30 登顶</small></li>
+          <li><b>10</b><span>一觉没睡和豆包聊了...</span><small>131244</small></li>
+        </ol>
+        <button class="full-hot-list" type="button">查看完整热搜榜　›</button>
+      </section>
+      <section class="study-card">
+        <strong>实验模拟说明</strong>
+        <p>本页面仅用于学术研究，账号、互动量和榜单均为虚构材料。</p>
+      </section>
+    </aside>
+  </div>
+
+  <div id="edit-post-modal" class="modal-backdrop" hidden>
+    <section class="edit-post-dialog" role="dialog" aria-modal="true" aria-labelledby="edit-post-title">
+      <header class="edit-post-header">
+        <button id="cancel-edit-post-top" class="dialog-text-button" type="button">取消</button>
+        <h2 id="edit-post-title">编辑动态</h2>
+        <span aria-hidden="true"></span>
+      </header>
+      <div class="edit-post-body">
+        <div class="edit-post-author">
+          <div class="avatar" aria-hidden="true">创</div>
+          <strong>社区创作者</strong>
+        </div>
+        <div class="edit-compose-area">
+          <textarea id="edit-post-text" rows="8" maxlength="1500" aria-label="编辑帖子正文"></textarea>
+          <div class="edit-declaration-select">
+            <button id="edit-declaration-toggle" class="declaration-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="edit-declaration-menu">
+              <span id="edit-declaration-toggle-label">内容声明</span><span aria-hidden="true">⌄</span>
+            </button>
+            <div id="edit-declaration-menu" class="declaration-menu" aria-label="编辑内容声明选项" hidden>
+              <div class="declaration-menu-heading"><strong>内容声明</strong><span aria-hidden="true">?</span></div>
+              <div class="declaration-options-grid">
+                <label class="declaration-menu-option"><input id="edit-declaration-none" type="radio" name="edit-content-declaration" value="none"><span>无</span></label>
+                <label class="declaration-menu-option"><input type="radio" name="edit-content-declaration" value="original"><span>内容为自主创作</span></label>
+                <label class="declaration-menu-option"><input type="radio" name="edit-content-declaration" value="repost"><span>内容为转载</span></label>
+                <label class="declaration-menu-option"><input id="edit-declaration-ai" type="radio" name="edit-content-declaration" value="ai"><span>内容由AI生成</span></label>
+                <label class="declaration-menu-option"><input type="radio" name="edit-content-declaration" value="fictional"><span>内容为虚构演绎</span></label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="edit-post-meta"><span>可修改正文及内容声明</span><span id="edit-post-count">0 / 1500</span></div>
+      </div>
+      <footer class="edit-post-footer">
+        <button id="cancel-edit-post" class="secondary-btn" type="button">取消</button>
+        <button id="save-edit-post" class="primary-btn" type="button">保存</button>
+      </footer>
+    </section>
+  </div>
+
+  <aside id="debug-panel" class="debug-panel" hidden>
+    <strong>研究者调试</strong>
+    <label>Study
+      <select id="debug-study">
+        <option value="1">Study 1</option>
+        <option value="2">Study 2</option>
+        <option value="3">Study 3</option>
+        <option value="4">Study 4</option>
+      </select>
+    </label>
+    <div id="debug-condition"></div>
+  </aside>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
